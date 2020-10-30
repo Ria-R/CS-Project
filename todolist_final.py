@@ -18,7 +18,7 @@ style.configure("TButton",foreground="orchid4", background="black")
    
   
     
-conn = sq.connect(host = 'localhost', user= 'root', password = 'redriri712' )
+conn = sq.connect(host = 'localhost', user= 'root', password = '' )
 cur = conn.cursor()
 
 r2 = cur.execute('use project;')
@@ -40,6 +40,7 @@ def addTask():
         listUpdate()
         e1.delete(0,'end')
         
+        
 '''
 def addCategory(): # block may show an indentation error
         wo = e3.get()
@@ -51,19 +52,35 @@ def addCategory(): # block may show an indentation error
             listUpdate() #function needs to be modified
             e3.delete(0,'end') #index may change based on list nesting
             '''
+
+def scheduler():
+    schedule.every().day.at(answer).do(job)
+    while True:
+        schedule.run_pending()
+        time.sleep(1)
+
+
+
+
 def Habitpicker():
     try:
-        val= t.get(t.curselection())
-        print (val)
-        messagebox.showinfo('Habits','Setting habit for selected task')
-        answer = simpledialog.askinteger("Habits", "Enter time of reminder in military time format",parent=root,minvalue = 0, maxvalue = 2400)
+        global uniq
+        uniq= t.get(t.curselection())
+        print (uniq)
+        messagebox.showinfo('Habits','Setting habit for {}'.format(uniq))
+        global answer
+        answer = simpledialog.askstring("Habits", "Enter time of reminder in 00:00 format",parent=root)
+        print(answer)
+        scheduler()
+        
         
     except:
          messagebox.showinfo('Habits','Please Select Task Item For Building Habits')
 
-def HabitScheduler():
-    Habitpicker()
-    messagebox.showinfo('Habits', 'It is time to form a habit!') 
+def job():
+    messagebox.showinfo('Habits', 'It is time to work on {}!'.format(uniq))
+
+            
     
 def listUpdate():
     clearList()
@@ -198,7 +215,7 @@ b7 = ttk.Button(root, text='Sort in Ascending', width=20, command=sort_list_up)
 b8 = ttk.Button(root, text='Sort in Descending', width=20, command=sort_list_down)
 b4 = ttk.Button(root, text='Exit', width=20, command=bye)
 b5 = ttk.Button(root, text ='Pomodoro timer',width = 20, command = pomodoro) #function needs to be added
-b6 = ttk.Button(root, text ='Habit builder',width = 20, command = HabitScheduler)
+b6 = ttk.Button(root, text ='Habit builder',width = 20, command = Habitpicker)
 
     
 retrieveDB()
