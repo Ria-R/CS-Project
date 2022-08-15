@@ -158,12 +158,7 @@ break_dialog_title = "Break Time.."
 
 
 def countdown(count, label, root):
-    """
-    Countdown for given seconds
-    :param count: counter for break
-    :param label: label for window
-    :param root: Tk root
-    """
+
     label['text'] = " Take a break for : " + str(count) + " sec"
 
     if count > 0:
@@ -173,9 +168,7 @@ def countdown(count, label, root):
 
 
 def show_break_dialog():
-    """
-    Show break dialog with message
-    """
+
     root = tk.Tk()
     root.lift()
     root.attributes('-topmost', True)
